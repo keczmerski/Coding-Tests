@@ -1,0 +1,7 @@
+# ignore all build products
+*.exe
+**/bin
+**/obj
+**/debug
+**/release
+**/.vs
