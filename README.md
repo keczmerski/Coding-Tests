@@ -7,5 +7,4 @@ This is a collection of many coding challenges. An effort has been made to clear
  
 Project or file: | Technology stack:          | Content
 -----------------|----------------------------|------------
-TestBed.Proj     | .Net Core Console NUnit C# | Many small coding chalenges written with TTD where 
-...              | ...                        | the implementations are only called through nunit tests.
+TestBed.Proj     | .Net Core Console NUnit C# | Many small coding chalenges written with TTD where the implementations are only called through nunit tests.
