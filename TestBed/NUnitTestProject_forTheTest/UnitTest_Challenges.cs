@@ -59,6 +59,22 @@ namespace NUnitTestProject_forTheTest
 
             Assert.IsFalse(IsContainsRepeatedValue(CountofOpperandOccurances));
         }
+        [Test]
+        public void Test_GetAllGroupsOfThreeUniqueOperandsForSingleSum_Offset()
+        {
+            List<int[]> CountofOpperandOccurances = Challenges.GetAllGroupsOfThreeUniqueOperandsForSingleSum(16, 2, 10);
+
+            Assert.IsTrue(ContainsAllInAnyOrder(CountofOpperandOccurances, 7, 6, 5));
+            Assert.IsTrue(ContainsAllInAnyOrder(CountofOpperandOccurances, 8, 7, 3));
+            Assert.IsTrue(ContainsAllInAnyOrder(CountofOpperandOccurances, 9, 6, 3));
+            Assert.IsTrue(ContainsAllInAnyOrder(CountofOpperandOccurances, 10, 5, 3));
+            Assert.IsTrue(ContainsAllInAnyOrder(CountofOpperandOccurances, 10, 6, 2));
+
+            Assert.IsFalse(ContainsAllInAnyOrder(CountofOpperandOccurances, 11, 4, 1));
+            Assert.IsFalse(ContainsAllInAnyOrder(CountofOpperandOccurances, 0, 14, 2));
+            
+            Assert.IsFalse(IsContainsRepeatedValue(CountofOpperandOccurances));
+        }
         private bool ContainsAllInAnyOrder(List<int[]>Container, int a, int b, int c)
         {
             List<int[]> allPossibleOrdersOfAll = new List<int[]>{ new int[] { a, b, c }

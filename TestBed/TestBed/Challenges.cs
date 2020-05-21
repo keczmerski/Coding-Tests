@@ -52,56 +52,24 @@ namespace TestBed
         public static List<int[]> GetAllGroupsOfThreeUniqueOperandsForSingleSum(int sum, int OperandMinimum = 1, int OperandMaximum = 9)
         {
             List<int[]> ListOfThreeOperands = new List<int[]>();
-            for (int FirstOperand = OperandMinimum; FirstOperand <= OperandMaximum; FirstOperand++){
-                for (int SecondOperand = OperandMinimum; SecondOperand <= OperandMaximum; SecondOperand++){
-                    if (SecondOperand == FirstOperand)
+            int NumberOfOperands = 3;
+            int offsetForNonDefaultMinimum = OperandMinimum - 1;
+            int offsetOperandMinimum = OperandMinimum - offsetForNonDefaultMinimum;
+            int offsetOperandMaximum = OperandMaximum - offsetForNonDefaultMinimum;
+            int offsetSum = sum - offsetForNonDefaultMinimum;
+
+
+            for (int FirstOperand = offsetOperandMaximum; FirstOperand > offsetSum / NumberOfOperands; FirstOperand--){
+                for (int SecondOperand = (int)Math.Ceiling((offsetSum - FirstOperand) / 2.0); SecondOperand <= offsetSum - FirstOperand - offsetOperandMinimum && SecondOperand < FirstOperand; SecondOperand++){
+                    int ThirdOperand = offsetSum - FirstOperand - SecondOperand;
+                    if (SecondOperand != ThirdOperand && SecondOperand!= FirstOperand)
                     {
-                        break;
-                    }
-                    for (int third = OperandMinimum; third <= OperandMaximum; third++){
-                        if (third == FirstOperand || third == SecondOperand)
-                        {
-                            break;
-                        }
-                        if (FirstOperand + SecondOperand + third == sum)
-                        {
-                            ListOfThreeOperands.Add( new int[] { FirstOperand, SecondOperand, third });
-                        }
+                        ListOfThreeOperands.Add(new int[] { FirstOperand + offsetForNonDefaultMinimum, SecondOperand + offsetForNonDefaultMinimum, ThirdOperand + offsetForNonDefaultMinimum });
                     }
                 }
             }
-            return FilterForUniqueOperands(ListOfThreeOperands);
+            return ListOfThreeOperands;
         }
-
-        public static List<int[]> FilterForUniqueOperands(List<int[]> OperandList)
-        {
-            List<int[]> filteredList = new List<int[]>();
-            for (int i= 0; i< OperandList.Count; i++)
-            {
-                if (filteredList.Count <= 0)
-                {
-                    filteredList.Add(OperandList[i]);
-                }
-                else
-                {
-                    bool IsPresent = false;
-                    foreach (int[] operandGroup in filteredList)
-                    {
-                        if (IsAllValuesPersentInEach(OperandList[i], operandGroup))
-                        {
-                            IsPresent = true;
-                            break;
-                        }
-                    }
-                    if (!IsPresent)
-                    {
-                        filteredList.Add(OperandList[i]);
-                    }
-                }
-            }
-            return filteredList;
-        }
-
 
         public static bool IsAllValuesPersentInEach(int[] A, int[] B)
         {
