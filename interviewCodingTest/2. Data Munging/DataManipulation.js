@@ -9,7 +9,7 @@ function GetAcceptableExpenses(AcceptableCategories, expenses){
         if ( AcceptableCategories.includes(category)){
             venderDate = [date, ": ", vender, " - $"].join('')
 
-            if ( IsVenderDateIncluded(AcceptableExpenseTotals, venderDate) ){
+            if ( AcceptableExpenseTotals.find(object => object['dateVender'] === venderDate) ){
                 UpdatePrice(AcceptableExpenseTotals, venderDate, price )
             }
             else{
@@ -18,19 +18,6 @@ function GetAcceptableExpenses(AcceptableCategories, expenses){
         }
     })
     return AcceptableExpenseTotals
-}
-
-function IsVenderDateIncluded(AcceptableExpenseTotals, venderDate){
-    const venderDateIndex = 0
-    let IsIncluded = false
-  
-    AcceptableExpenseTotals.forEach( AcceptableExpenseTotal =>{
-        if (AcceptableExpenseTotal['dateVender'] === venderDate){
-            IsIncluded = true
-        }
-    })
-
-    return IsIncluded
 }
 
 function UpdatePrice(AcceptableExpenseTotals, venderDate, price ){
