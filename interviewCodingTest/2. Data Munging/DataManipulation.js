@@ -1,6 +1,6 @@
 function GetAcceptableExpenses(AcceptableCategories, expenses){
     const ExpensesList = expenses.split("\n")
-    let AcceptableExpenseTotals = []
+    let AcceptableExpenseTotals = {};
     let venderDate = []
     
     ExpensesList.forEach(expense => {
@@ -9,25 +9,17 @@ function GetAcceptableExpenses(AcceptableCategories, expenses){
         if ( AcceptableCategories.includes(category)){
             venderDate = [date, ": ", vender, " - $"].join('')
 
-            if ( AcceptableExpenseTotals.find(object => object['dateVender'] === venderDate) ){
-                UpdatePrice(AcceptableExpenseTotals, venderDate, price )
+            if ( venderDate in AcceptableExpenseTotals){
+                AcceptableExpenseTotals[venderDate] += parseFloat(price);
             }
             else{
-                AcceptableExpenseTotals.push({dateVender: venderDate, totalPrice: price })
+                AcceptableExpenseTotals[venderDate] = parseFloat(price);
             }
         }
     })
     return AcceptableExpenseTotals
 }
 
-function UpdatePrice(AcceptableExpenseTotals, venderDate, price ){
-    AcceptableExpenseTotals.forEach( AcceptableExpenseTotal =>{
-        if (AcceptableExpenseTotal['dateVender'] === venderDate){
-            AcceptableExpenseTotal['totalPrice'] = parseFloat( price) + parseFloat(AcceptableExpenseTotal['totalPrice'])
-            return
-        }
-    })
-}
 
 function GetAcceptableCategories(categories){
     const categoryList = categories.split("\n")
@@ -63,8 +55,11 @@ const expenses = "Starbucks,3/10/2018,Iced Americano,4.28,CFE\nStarbucks,3/10/20
 
 const AcceptableExpenses = GetAcceptableExpenses(GetAcceptableCategories(categories), expenses)
 
-AcceptableExpenses.forEach (AcceptableExpense =>{
-    console.log([AcceptableExpense['dateVender'], AcceptableExpense['totalPrice'] ].join(''))
-})
+const keys = Object.keys(AcceptableExpenses);
+
+keys.forEach((key, index) => {
+    console.log(`${key} ${AcceptableExpenses[key]}`);
+});
+
 console.log("Processing complete")
 
