@@ -6,14 +6,100 @@ namespace NUnitTestProject_forTheTest
 {
     public class Tests
     {
+        private int[] superLargeTestArrayOfOnesAndZeros = null;
+        private int[] superLargeTestArrayOfOnesAndZeros_WorstCase = null;
         [SetUp]
         public void Setup()
         {
+            int LengthOfSuperLargeTestArray = 10000000;
+            if (superLargeTestArrayOfOnesAndZeros == null)
+            {
+                superLargeTestArrayOfOnesAndZeros = GetTestArrayOfSize(LengthOfSuperLargeTestArray);
+            }
+            if (superLargeTestArrayOfOnesAndZeros_WorstCase == null)
+            {
+                superLargeTestArrayOfOnesAndZeros_WorstCase = GetTestArrayOfSize_Worstcase(LengthOfSuperLargeTestArray);
+            }
         }
+        [Test]
+        public void Test_ValueJump_Exceptions()
+        {
+            var ex1 = Assert.Throws<System.Exception>(() => Challenges.Skipping(new int[] { 0 }));
+            var ex2 = Assert.Throws<System.Exception>(() => Challenges.Skipping(new int[] { 1, 0 }));
+            var ex3 = Assert.Throws<System.Exception>(() => Challenges.Skipping(new int[] { 1, 1, 0 }));
+            var ex4 = Assert.Throws<System.Exception>(() => Challenges.Skipping(new int[] { 0, 1, 1 }));
+            var ex5 = Assert.Throws<System.Exception>(() => Challenges.Skipping(new int[] { 0, 1, 1, 0 }));
+        }
+        [Test]
+        public void Test_ValueJump_nIsTwo()
+        {
+            Assert.AreEqual(1, Challenges.Skipping(new int[] { 0, 0 }));
+            Assert.AreEqual(0, Challenges.Skipping(new int[] { 0, 1 }));
+        }
+        [Test]
+        public void Test_ValueJump_nIsThree()
+        {
+            Assert.AreEqual(1, Challenges.Skipping(new int[] { 0, 0, 0 }));
+            Assert.AreEqual(1, Challenges.Skipping(new int[] { 0, 0, 1 }));
+            Assert.AreEqual(1, Challenges.Skipping(new int[] { 0, 1, 0 }));
+        }
+        [Test]
+        public void Test_ValueJump_nIsFour()
+        {
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 0, 0 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 1, 0 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 1, 0, 0 }));
+            Assert.AreEqual(1, Challenges.Skipping(new int[] { 0, 1, 0, 1 }));
+        }
+        [Test]
+        public void Test_ValueJump_nIsFive()
+        {
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 0, 0, 0 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 0, 0, 1 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 0, 1, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 1, 0, 0 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 1, 0, 0, 0 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 1, 0, 1 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 1, 0, 0, 1 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 1, 0, 1, 0 }));
+        }
+        [Test]
+        public void Test_ValueJump_nIsSix()
+        {
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 0, 0, 0 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 0, 0, 0, 1 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 0, 1, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 1, 0, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 1, 0, 0, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 1, 0, 0, 0, 0 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 0, 0, 1, 0, 1 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 1, 0, 0, 1 }));
+            Assert.AreEqual(2, Challenges.Skipping(new int[] { 0, 1, 0, 0, 0, 1 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 1, 0, 1, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 1, 0, 0, 1, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 1, 0, 1, 0, 0 }));
+        }
+        [Test]
+        public void Test_ValueJump_nIsSeven()
+        {
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 0, 0, 0, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 0, 0, 0, 1 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 0, 0, 1, 0 }));
+            Assert.AreEqual(4, Challenges.Skipping(new int[] { 0, 0, 0, 0, 1, 0, 0 }));// this one?
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 1, 0, 0, 0 }));
+            Assert.AreEqual(4, Challenges.Skipping(new int[] { 0, 0, 1, 0, 0, 0, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 1, 0, 0, 0, 0, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 0, 1, 0, 1 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 0, 0, 1, 0, 1, 0 }));
+            Assert.AreEqual(4, Challenges.Skipping(new int[] { 0, 0, 1, 0, 0, 1, 0 }));
+            Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 1, 0, 0, 0, 1, 0 }));
+            Assert.AreEqual(4, Challenges.Skipping(new int[] { 0, 0, 1, 0, 1, 0, 0 }));
+        }
+
         [Test]
         public void Test_getCountofOpperandOccurancesIn_ThreeUniqueOperandsForSingleSum()
         {
-            Dictionary<int, int> CountofOpperandOccurances = Challenges.getCountofOpperandOccurancesIn_ThreeUniqueOperandsForSingleSum(15, 1, 9);
+            Dictionary<int, int> CountofOpperandOccurances = Challenges.GetCountofOpperandOccurancesIn_ThreeUniqueOperandsForSingleSum(15, 1, 9);
 
             Assert.IsTrue(CountofOpperandOccurances.ContainsKey(1));
             Assert.IsTrue(CountofOpperandOccurances.ContainsKey(2));
@@ -167,20 +253,15 @@ namespace NUnitTestProject_forTheTest
         {
             int[] testArrayA = new int[] { 1, 0 };
             int[] testResultArrayA = new int[] { 0, 1 };
-            int[] testArrayB = new int[] { 0, 1 };
-            int[] testResultArrayB = new int[] { 0, 1 };
-            int[] testArrayC = new int[] { 1, 0, 0 };
-            int[] testResultArrayC = new int[] { 0, 0, 1 };
-            int[] testArrayD = new int[] { 0, 1, 0 };
-            int[] testResultArrayD = new int[] { 0, 0, 1 };
-            int[] testArrayE = new int[] { 0, 0, 1 };
-            int[] testResultArrayE = new int[] { 0, 0, 1 };
-
 
             Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
 
             testArrayA = new int[] { 0, 1 };
             //testResultArrayA = new int[] { 0, 1 };
+            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
+
+            testArrayA = new int[] { 0, 0 };
+            testResultArrayA = new int[] { 0, 0 };
             Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
 
             testArrayA = new int[] { 0, 1, 0 };
@@ -230,21 +311,68 @@ namespace NUnitTestProject_forTheTest
 
         }
 
+        [Test]
+        public void SortOnesTest_LargeArraySpeed()
+        {
+            Assert.DoesNotThrow(() => Challenges.SortOnesZeros(superLargeTestArrayOfOnesAndZeros));
+        }
+        [Test]
+        public void SortOnesTestAlternate_LargeArraySpeed_WorstCase()
+        {
+            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternate(superLargeTestArrayOfOnesAndZeros_WorstCase));
+        }
+        [Test]
+        public void SortOnesTest_LargeArraySpeed_WorstCase()
+        {
+            Assert.DoesNotThrow(() => Challenges.SortOnesZeros(superLargeTestArrayOfOnesAndZeros_WorstCase));
+        }
+        [Test]
+        public void SortOnesTestAlternate_LargeArraySpeed()
+        {
+            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternate(superLargeTestArrayOfOnesAndZeros));
+        }
+        [Test]
+        public void SortOnesTestAlternateIII_LargeArraySpeed_WorstCase()
+        {
+            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternateIII(superLargeTestArrayOfOnesAndZeros_WorstCase));
+        }
+        [Test]
+        public void SortOnesTestAlternateIII_LargeArraySpeed()
+        {
+            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternateIII(superLargeTestArrayOfOnesAndZeros));
+        }
+        private int[] GetTestArrayOfSize(int desiredSize)
+        {
+            System.Random rand = new System.Random(System.Guid.NewGuid().GetHashCode());
+            List<int> theBigArray = new List<int>();
+            for(int i= 0; i< desiredSize; i++)
+            {
+                theBigArray.Add(rand.Next(0, 1));
+            }
+            return theBigArray.ToArray();
+        }
+
+        private int[] GetTestArrayOfSize_Worstcase(int desiredSize)
+        {
+            List<int> theBigArray = new List<int>();
+            int half = (int)(desiredSize / 2);
+            for (int i = 0; i < half; i++)
+            {
+                theBigArray.Add(1);
+            }
+            for (int i = 0; i < half; i++)
+            {
+                theBigArray.Add(0);
+            }
+            return theBigArray.ToArray();
+        }
+
 
         [Test]
-        public void sortOnesAlternate_Test()
+        public void SortOnesAlternate_Test()
         {
             int[] testArrayA = new int[] { 1, 0 };
             int[] testResultArrayA = new int[] { 0, 1 };
-            int[] testArrayB = new int[] { 0, 1 };
-            int[] testResultArrayB = new int[] { 0, 1 };
-            int[] testArrayC = new int[] { 1, 0, 0 };
-            int[] testResultArrayC = new int[] { 0, 0, 1 };
-            int[] testArrayD = new int[] { 0, 1, 0 };
-            int[] testResultArrayD = new int[] { 0, 0, 1 };
-            int[] testArrayE = new int[] { 0, 0, 1 };
-            int[] testResultArrayE = new int[] { 0, 0, 1 };
-
 
             Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
 
@@ -389,14 +517,14 @@ namespace NUnitTestProject_forTheTest
         [Test]
         public void ReverseStringTest()
         {
-            var ex = Assert.Throws<System.NullReferenceException>(() => TestBed.Challenges.reverse(null));
+            var ex = Assert.Throws<System.NullReferenceException>(() => TestBed.Challenges.Reverse(null));
 
             //Assert.That(ex.Message == "Not a positive real number");
-            Assert.AreEqual(TestBed.Challenges.reverse(""), "");
-            Assert.AreEqual(TestBed.Challenges.reverse("hello world"), "dlrow olleh");
-            Assert.AreEqual(TestBed.Challenges.reverse("cat"), "tac");
-            Assert.AreEqual(TestBed.Challenges.reverse("catt"), "ttac");
-            Assert.AreEqual(TestBed.Challenges.reverse("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFcatt"), "ttacFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+            Assert.AreEqual(TestBed.Challenges.Reverse(""), "");
+            Assert.AreEqual(TestBed.Challenges.Reverse("hello world"), "dlrow olleh");
+            Assert.AreEqual(TestBed.Challenges.Reverse("cat"), "tac");
+            Assert.AreEqual(TestBed.Challenges.Reverse("catt"), "ttac");
+            Assert.AreEqual(TestBed.Challenges.Reverse("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFcatt"), "ttacFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 
         }
 

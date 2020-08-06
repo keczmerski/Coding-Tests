@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,94 @@ namespace TestBed
 {
     public class Challenges
     {
+
+        /// <summary>
+        /// Move through the list as quickly (with as few moves) as possible. 
+        /// Skips move two spaces. You must skip all 1's. If the list ends with 1 then the moves end at the last 0 value. What is the least number of moves possible?
+        /// Preconditions: c[0] == 0;
+        ///                c.Length >= 2;
+        ///                c consists of only 1's and 0's;
+        ///                c should not contain two consectutive 1's               
+        /// </summary>
+        /// <param name="c">An int list containing only 1's and 0's.</param>
+        /// <returns>The minimum number of moves.</returns>
+        public static int Skipping(int[] c)
+        {
+            if (c.Length < 2) { throw new Exception("There must be at least two values."); }
+            if (c[0] != 0) { throw new Exception("The first value must be zero(0)."); }
+
+            return ExtractJumpCount_FromListOfConsecutiveValueCounts(CreateListOfConsecutiveValueCounts(c));
+        }
+        private enum ValueType { zero = 0, one = 1 };
+        struct CountedValue
+        {
+            public int Count;
+            public ValueType TypeOfValue;
+            public CountedValue(int count, ValueType value_Type)
+            {
+                Count = count;
+                TypeOfValue = value_Type;
+            }
+            public CountedValue(int count, int value_Type)
+            {
+                Count = count;
+                TypeOfValue = (ValueType)value_Type;
+            }
+        }
+
+        private static List<CountedValue> CreateListOfConsecutiveValueCounts(int[] c)
+        {
+            List<CountedValue> ListOfConsecutiveValueCounts = new List<CountedValue>();
+            CountedValue CurrentCountedValue = new CountedValue(0, 0);
+            foreach (int CValue in c)
+            {
+                if ((0 <= CValue) && (CValue <= 1))
+                {
+                    Console.WriteLine($"Warning: Bad Value Detected in Skipping: {CValue}");
+                }
+                if (((0 <= CValue) && (CValue <= 1)) && (CValue != (int)CurrentCountedValue.TypeOfValue))
+                {
+                    ListOfConsecutiveValueCounts.Add(CurrentCountedValue);
+                    CurrentCountedValue = new CountedValue(count: 1, value_Type: CValue);
+                }
+                else
+                {
+                    CurrentCountedValue.Count++;
+                }
+            }
+            if (CurrentCountedValue.Count > 1)
+            {
+                ListOfConsecutiveValueCounts.Add(CurrentCountedValue);
+            }
+            return ListOfConsecutiveValueCounts;
+        }
+        private static int ExtractJumpCount_FromListOfConsecutiveValueCounts(List<CountedValue> ListOfConsecutiveValueCounts)
+        {
+            int JumpCount = 0;
+            foreach (CountedValue countOfValues in ListOfConsecutiveValueCounts)
+            {
+
+                switch (countOfValues.TypeOfValue)
+                {
+                    case ValueType.zero:
+                        {
+                            JumpCount += (int)Math.Floor((double)countOfValues.Count / 2);
+                            break;
+                        }
+                    case ValueType.one:
+                        {
+                            if (countOfValues.Count > 1)
+                            {
+                                throw new Exception("Impossible Jump required.");
+                            }
+                            JumpCount++;
+                            break;
+                        }
+                }
+            }
+            return JumpCount;
+        }
+
         /// <summary>
         /// Given a range of integers, count the number of ways each single integer can be used in unique sets of three 
         /// operands that all add up to a given sum.
@@ -18,28 +107,27 @@ namespace TestBed
         /// <param name="OperandMaximum">The lowest integer in the range of integers included as possible opperands.</param>
         /// <returns>A Dictionary of the count (value) of ways a single integer (key) can occur in unique sets of three operands 
         /// that all add up to a given sum.</returns>
-        public static Dictionary<int,int> getCountofOpperandOccurancesIn_ThreeUniqueOperandsForSingleSum(int sum, int OperandMinimum = 1, int OperandMaximum = 9)
-        {
-            Dictionary<int, int> SumOfOperands = new Dictionary<int, int>();
-
-            List<int[]> ListOfThreeOperands = GetAllGroupsOfThreeUniqueOperandsForSingleSum(sum, OperandMinimum = 1, OperandMaximum = 9);
-            foreach(int[] operandsGroup in ListOfThreeOperands)
+        public static Dictionary<int,int> GetCountofOpperandOccurancesIn_ThreeUniqueOperandsForSingleSum(int sum, int OperandMinimum = 1, int OperandMaximum = 9)
             {
-                foreach(int operand in operandsGroup)
+                Dictionary<int, int> SumOfOperands = new Dictionary<int, int>();
+
+                List<int[]> ListOfThreeOperands = GetAllGroupsOfThreeUniqueOperandsForSingleSum(sum, OperandMinimum, OperandMaximum);
+                foreach(int[] operandsGroup in ListOfThreeOperands)
                 {
-                    if (SumOfOperands.ContainsKey(operand))
+                    foreach(int operand in operandsGroup)
                     {
-                        SumOfOperands[operand]++;
-                    }
-                    else
-                    {
-                        SumOfOperands.Add(operand, 1);
+                        if (SumOfOperands.ContainsKey(operand))
+                        {
+                            SumOfOperands[operand]++;
+                        }
+                        else
+                        {
+                            SumOfOperands.Add(operand, 1);
+                        }
                     }
                 }
+                return SumOfOperands;
             }
-            return SumOfOperands;
-
-        }
 
         /// <summary>
         /// Get three unique operands for a single sum such that operand1 + operand2 + operand3 = sum 
@@ -89,8 +177,8 @@ namespace TestBed
         }
 
         /// <summary>
-        /// Sort an interger array containing only ones and zeros with the lowest complexity possible.
-        /// This algorythim has a complexity of O(n) since it only looks at any value in the array once.
+        /// Sort an integer array containing only ones and zeros with the lowest complexity possible.
+        /// This algorithm has a complexity of O(n) since it only looks at any value in the array once.
         /// </summary>
         /// <param name="value">A list of values to sort where all values are either one or zero.</param>
         /// <returns></returns>
@@ -100,60 +188,79 @@ namespace TestBed
             int i = 0;
             while (i < j)
             {
-                if (value[i] < 0 || value[i] > 1 || value[j] < 0 || value[j] > 1)
-                {
-                    throw new Exception("Value array can only contain 1's and 0's.");
-                }
-                while (value[i] == 0)
+                // commented out to give the fairest speed test in the search for the fastest algorythm:
+                //if (value[i] < 0 || value[i] > 1 || value[j] < 0 || value[j] > 1)
+                //{
+                //    throw new Exception("Value array can only contain 1's and 0's.");
+                //}
+                while (i < j && value[i] == 0)
                 {
                     i++;
                 }
-                while (value[j]== 1)
+                while (i < j && value[j]== 1)
                 {
                     j--;
                 }
                 if (j > i && value[i] > value[j] )
                 {
-                    int temp = value[j];
-                    value[j] = value[i];
-                    value[i] = temp;
+                    value[j] = 1;
+                    value[i] = 0;
                     j--;
                     i++;
                 }
             }
             return value;
         }
+        /// <summary>
+        /// credit : https://codereview.stackexchange.com/a/247572/57486
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static int[] SortOnesZerosAlternateIII(int[] values)
+        {
+            int countOfZeros = values.Length - values.Sum();
+            //alternative methods to set all values to 0, the fastest is uncommented:
+            //for (int i = 0; i < countOfZeros; i++)
+            //{
+            //    values[i] = 0;
+            //}
+            //values = new int[values.Length];
+            Array.Clear(values, 0, values.Length);
+            for (int i = countOfZeros; i < values.Length; i++)
+            {
+                values[i] = 1;
+            }
+
+            return values;
+        }
 
         /// <summary>
         /// Sort an interger array containing only ones and zeros with the lowest complexity possible. 
         /// Alternative Implementation.
         /// This algorythim has a complexity of O(n) since it only looks at any value in the array once. 
-        /// The algroythm is slower then "SortOnesZeros" probably because it actually touches each array item twice.
+        /// The algroythm is slower then "SortOnesZeros" the complexity is O(2n) which is really O(n).
+        /// credit: https://codereview.stackexchange.com/a/247584/57486
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
         public static int[] SortOnesZerosAlternate(int[] values)
         {
-            int countOfZeros = 0;
-            foreach(int value in values)
+            int NextNewOneLocation = values.Length - 1;
+            for (int i = values.Length - 1; i>=0; i--)
             {
-                if (value == 0)
+                if (values[i] == 1)
                 {
-                    countOfZeros++;
+                    values[NextNewOneLocation--] = 1;
                 }
-                if (value <0 || value > 1)
-                {
-                    throw new Exception("Value array can only contain 1's and 0's.");
-                }
+                // commented out to give the fairest speed test in the search for the fastest algorythm:
+                //if (values[i] < 0 || values[i] > 1)
+                //{
+                //    throw new Exception("Value array can only contain 1's and 0's.");
+                //}
             }
-            for (int i = 0; i < countOfZeros; i++)
-            {
-                values[i] = 0;
-            }
-            for (int i = countOfZeros; i < values.Length; i++)
-            {
-                values[i] = 1;
-            }
+            int CountOfZeros = NextNewOneLocation + 1;
+            
+            Array.Clear(values, 0, CountOfZeros);
 
             return values;
         }
@@ -279,14 +386,12 @@ namespace TestBed
             return result.ToArray();
         }
 
-
-
         /// <summary>
         /// The user will input a string and the method should return the reverse of that string
         /// </summary>
         /// <param name="toBeReversed">String to be reversed</param>
         /// <returns>reversed string</returns>
-        static public string reverse(string toBeReversed)
+        static public string Reverse(string toBeReversed)
         {
             if (toBeReversed == null)
             {
@@ -415,7 +520,7 @@ namespace TestBed
             {
                 if (c == ' ' || c == '.' || c == ',')
                 {
-                    seperatedValue.Append(reverse(currentWord.ToString()));
+                    seperatedValue.Append(Reverse(currentWord.ToString()));
                     seperatedValue.Append(c.ToString());
                     currentWord.Clear();
                 }
@@ -424,7 +529,7 @@ namespace TestBed
                     currentWord.Append(c.ToString());
                 }
             }
-            seperatedValue.Append(reverse(currentWord.ToString()));
+            seperatedValue.Append(Reverse(currentWord.ToString()));
 
             string resultValue = seperatedValue.ToString();
             return resultValue;
@@ -504,8 +609,6 @@ namespace TestBed
             return sum;
         }
 
-
-
         /// <summary>
         /// Given a string, return a corresponding string that is sorted so that all chars present are placed in alphebitical order.
         /// </summary>
@@ -521,7 +624,6 @@ namespace TestBed
             Array.Sort(characters);
             return new string(characters);
         }
-
 
         /// <summary>
         /// Given an integer, return the factorial of that integer.
@@ -567,7 +669,6 @@ namespace TestBed
  
             return result;
         }
-
     }
 }
 
