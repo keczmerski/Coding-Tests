@@ -6,21 +6,15 @@ namespace NUnitTestProject_forTheTest
 {
     public class Tests
     {
-        private int[] superLargeTestArrayOfOnesAndZeros = null;
-        private int[] superLargeTestArrayOfOnesAndZeros_WorstCase = null;
+
         [SetUp]
         public void Setup()
         {
-            int LengthOfSuperLargeTestArray = 10000000;
-            if (superLargeTestArrayOfOnesAndZeros == null)
-            {
-                superLargeTestArrayOfOnesAndZeros = GetTestArrayOfSize(LengthOfSuperLargeTestArray);
-            }
-            if (superLargeTestArrayOfOnesAndZeros_WorstCase == null)
-            {
-                superLargeTestArrayOfOnesAndZeros_WorstCase = GetTestArrayOfSize_Worstcase(LengthOfSuperLargeTestArray);
-            }
         }
+
+
+        #region numbers
+        #region Test_Skipping
         [Test]
         public void Test_ValueJump_Exceptions()
         {
@@ -95,7 +89,8 @@ namespace NUnitTestProject_forTheTest
             Assert.AreEqual(3, Challenges.Skipping(new int[] { 0, 1, 0, 0, 0, 1, 0 }));
             Assert.AreEqual(4, Challenges.Skipping(new int[] { 0, 0, 1, 0, 1, 0, 0 }));
         }
-
+        #endregion
+        #region Test_GetAllGroupsOfThreeUniqueOperandsForSingleSum
         [Test]
         public void Test_getCountofOpperandOccurancesIn_ThreeUniqueOperandsForSingleSum()
         {
@@ -124,7 +119,6 @@ namespace NUnitTestProject_forTheTest
             Assert.AreEqual(CountofOpperandOccurances[8], 3);
             Assert.AreEqual(CountofOpperandOccurances[9], 2);
         }
-
         [Test]
         public void Test_GetAllGroupsOfThreeUniqueOperandsForSingleSum()
         {
@@ -158,10 +152,10 @@ namespace NUnitTestProject_forTheTest
 
             Assert.IsFalse(ContainsAllInAnyOrder(CountofOpperandOccurances, 11, 4, 1));
             Assert.IsFalse(ContainsAllInAnyOrder(CountofOpperandOccurances, 0, 14, 2));
-            
+
             Assert.IsFalse(IsContainsRepeatedValue(CountofOpperandOccurances));
         }
-        private bool ContainsAllInAnyOrder(List<int[]>Container, int a, int b, int c)
+        private bool ContainsAllInAnyOrder(List<int[]> Container, int a, int b, int c)
         {
             List<int[]> allPossibleOrdersOfAll = new List<int[]>{ new int[] { a, b, c }
                                                                 , new int[] { a, c, b }
@@ -171,8 +165,8 @@ namespace NUnitTestProject_forTheTest
                                                                 , new int[] { c, b, a } };
             foreach (int[] groupAll in allPossibleOrdersOfAll)
             {
-                foreach (int[] groupContainer in Container) 
-                { 
+                foreach (int[] groupContainer in Container)
+                {
                     if (groupContainer[0] == groupAll[0] && groupContainer[1] == groupAll[1] && groupContainer[2] == groupAll[2])
                     {
                         return true;
@@ -186,7 +180,7 @@ namespace NUnitTestProject_forTheTest
         {
             for (int i = 0; i < Container.Count; i++)
             {
-                if(IsContainsAllAtIndex_InAnyOrder_ExcludingIndexValue(Container, i))
+                if (IsContainsAllAtIndex_InAnyOrder_ExcludingIndexValue(Container, i))
                 {
                     return true;
                 }
@@ -194,7 +188,7 @@ namespace NUnitTestProject_forTheTest
             return false;
         }
 
-        private bool IsContainsAllAtIndex_InAnyOrder_ExcludingIndexValue(List<int[]> Container,  int index)
+        private bool IsContainsAllAtIndex_InAnyOrder_ExcludingIndexValue(List<int[]> Container, int index)
         {
             int a = Container[index][0];
             int b = Container[index][1];
@@ -206,9 +200,9 @@ namespace NUnitTestProject_forTheTest
                                                                 , new int[] { c, a, b }
                                                                 , new int[] { c, b, a } };
             bool IsContains = false;
-            for(int i = 0; i < Container.Count; i++)
+            for (int i = 0; i < Container.Count; i++)
             {
-                if(i != index)
+                if (i != index)
                 {
                     foreach (int[] group in allPossibleOrdersOfAll)
                     {
@@ -217,15 +211,16 @@ namespace NUnitTestProject_forTheTest
                             IsContains = true;
                         }
                     }
-                } 
+                }
             }
             return IsContains;
         }
+        #endregion
 
         [Test]
         public void SecondLargestTest()
         {
-            int[] testArrayA = new int[] { 2, 3, 45,4,60, 5, 1 };
+            int[] testArrayA = new int[] { 2, 3, 45, 4, 60, 5, 1 };
             int[] testArrayB = new int[] { 2, 3, 4, 1 };
             int[] testArrayE = new int[] { -2, -3, 4, -1 };
             int[] testArrayF = new int[] { -2, 3, 4, 4 };
@@ -247,187 +242,6 @@ namespace NUnitTestProject_forTheTest
             // now we can test the exception itself
             Assert.IsTrue(ex.Message.Contains(ExpectedError));
         }
-
-        [Test]
-        public void SortOnesTest()
-        {
-            int[] testArrayA = new int[] { 1, 0 };
-            int[] testResultArrayA = new int[] { 0, 1 };
-
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 0, 1 };
-            //testResultArrayA = new int[] { 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 0, 0 };
-            testResultArrayA = new int[] { 0, 0 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 0, 1, 0 };
-            testResultArrayA = new int[] { 0, 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 0, 0, 1 };
-            //testResultArrayA = new int[] { 0, 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 1, 0, 0 };
-            //testResultArrayA = new int[] { 0, 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 0 };
-            testResultArrayA = new int[] { 0, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 1, 0, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 0, 1, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-
-            testArrayA = new int[] { 0, 1, 1, 1 };
-            testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 1, 0, 1, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 0, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 1, 0 };
-            //testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            testResultArrayA = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZeros(testArrayA));
-
-        }
-
-        [Test]
-        public void SortOnesTest_LargeArraySpeed()
-        {
-            Assert.DoesNotThrow(() => Challenges.SortOnesZeros(superLargeTestArrayOfOnesAndZeros));
-        }
-        [Test]
-        public void SortOnesTestAlternate_LargeArraySpeed_WorstCase()
-        {
-            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternate(superLargeTestArrayOfOnesAndZeros_WorstCase));
-        }
-        [Test]
-        public void SortOnesTest_LargeArraySpeed_WorstCase()
-        {
-            Assert.DoesNotThrow(() => Challenges.SortOnesZeros(superLargeTestArrayOfOnesAndZeros_WorstCase));
-        }
-        [Test]
-        public void SortOnesTestAlternate_LargeArraySpeed()
-        {
-            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternate(superLargeTestArrayOfOnesAndZeros));
-        }
-        [Test]
-        public void SortOnesTestAlternateIII_LargeArraySpeed_WorstCase()
-        {
-            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternateIII(superLargeTestArrayOfOnesAndZeros_WorstCase));
-        }
-        [Test]
-        public void SortOnesTestAlternateIII_LargeArraySpeed()
-        {
-            Assert.DoesNotThrow(() => Challenges.SortOnesZerosAlternateIII(superLargeTestArrayOfOnesAndZeros));
-        }
-        private int[] GetTestArrayOfSize(int desiredSize)
-        {
-            System.Random rand = new System.Random(System.Guid.NewGuid().GetHashCode());
-            List<int> theBigArray = new List<int>();
-            for(int i= 0; i< desiredSize; i++)
-            {
-                theBigArray.Add(rand.Next(0, 1));
-            }
-            return theBigArray.ToArray();
-        }
-
-        private int[] GetTestArrayOfSize_Worstcase(int desiredSize)
-        {
-            List<int> theBigArray = new List<int>();
-            int half = (int)(desiredSize / 2);
-            for (int i = 0; i < half; i++)
-            {
-                theBigArray.Add(1);
-            }
-            for (int i = 0; i < half; i++)
-            {
-                theBigArray.Add(0);
-            }
-            return theBigArray.ToArray();
-        }
-
-
-        [Test]
-        public void SortOnesAlternate_Test()
-        {
-            int[] testArrayA = new int[] { 1, 0 };
-            int[] testResultArrayA = new int[] { 0, 1 };
-
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 0, 1 };
-            //testResultArrayA = new int[] { 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 0, 1, 0 };
-            testResultArrayA = new int[] { 0, 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 0, 0, 1 };
-            //testResultArrayA = new int[] { 0, 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 1, 0, 0 };
-            //testResultArrayA = new int[] { 0, 0, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 0 };
-            testResultArrayA = new int[] { 0, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 1, 0, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 0, 1, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-
-            testArrayA = new int[] { 0, 1, 1, 1 };
-            testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 1, 0, 1, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 0, 1 };
-            //testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 1, 0 };
-            //testResultArrayA = new int[] { 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-            testArrayA = new int[] { 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            testResultArrayA = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 };
-            Assert.AreEqual(testResultArrayA, Challenges.SortOnesZerosAlternate(testArrayA));
-
-        }
-
-
         [Test]
         public void IntAdditionTest()
         {
@@ -474,25 +288,6 @@ namespace NUnitTestProject_forTheTest
         }
 
         [Test]
-        public void AllSubStringTest()
-        {
-            Assert.AreEqual("a ab abc abcd b bc bcd c cd d", Challenges.AllSubString("abcd"));
-            Assert.IsTrue(Challenges.AllSubString("hello world").Contains("d"));
-            Assert.IsTrue(Challenges.AllSubString("hello world").Contains("world"));
-            Assert.IsTrue(Challenges.AllSubString("hello world").Contains("o w"));
-            var ex = Assert.Throws<System.NullReferenceException>(() => TestBed.Challenges.AllSubString(null));
-            Assert.AreEqual(Challenges.AllSubString(""), "");
-        }
-        [Test]
-        public void RemoveDuplicateCharsStringTest()
-        {
-            Assert.AreEqual("helo wrd", Challenges.RemoveDuplicateChars("hello world"));
-            Assert.AreEqual("csharpone", Challenges.RemoveDuplicateChars("csharpcorner"));
-            var ex = Assert.Throws<System.NullReferenceException>(() => TestBed.Challenges.RemoveDuplicateChars(null));
-            Assert.AreEqual(Challenges.RemoveDuplicateChars(""), "");
-        }
-
-        [Test]
         public void PrimeTest()
         {
             Assert.IsFalse(TestBed.Challenges.IsPrime(21));
@@ -512,7 +307,27 @@ namespace NUnitTestProject_forTheTest
 
             // now we can test the exception itself
             Assert.That(ex.Message == "Not a positive real number");
+        }
+        #endregion
 
+        #region Strings and Chars
+        [Test]
+        public void AllSubStringTest()
+        {
+            Assert.AreEqual("a ab abc abcd b bc bcd c cd d", Challenges.AllSubString("abcd"));
+            Assert.IsTrue(Challenges.AllSubString("hello world").Contains("d"));
+            Assert.IsTrue(Challenges.AllSubString("hello world").Contains("world"));
+            Assert.IsTrue(Challenges.AllSubString("hello world").Contains("o w"));
+            var ex = Assert.Throws<System.NullReferenceException>(() => TestBed.Challenges.AllSubString(null));
+            Assert.AreEqual(Challenges.AllSubString(""), "");
+        }
+        [Test]
+        public void RemoveDuplicateCharsStringTest()
+        {
+            Assert.AreEqual("helo wrd", Challenges.RemoveDuplicateChars("hello world"));
+            Assert.AreEqual("csharpone", Challenges.RemoveDuplicateChars("csharpcorner"));
+            var ex = Assert.Throws<System.NullReferenceException>(() => TestBed.Challenges.RemoveDuplicateChars(null));
+            Assert.AreEqual(Challenges.RemoveDuplicateChars(""), "");
         }
         [Test]
         public void ReverseStringTest()
@@ -527,7 +342,6 @@ namespace NUnitTestProject_forTheTest
             Assert.AreEqual(TestBed.Challenges.Reverse("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFcatt"), "ttacFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 
         }
-
         [Test]
         public void PalendromeStringTest()
         {
@@ -564,5 +378,6 @@ namespace NUnitTestProject_forTheTest
             var ex = Assert.Throws<System.NullReferenceException>(() => TestBed.Challenges.LetterCounter(null));
             Assert.AreEqual(Challenges.LetterCounter(""), "");
         }
+        #endregion
     }
 }
