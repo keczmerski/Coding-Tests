@@ -16,16 +16,24 @@ namespace SelectAChalenge
         /// <param name="args"></param>
         static void Main()
         {
-            MethodInfo[] methodInfos = typeof(Challenges).GetMethods();
+            MethodInfo[] methodInfoChallenges = typeof(Challenges).GetMethods();
+            //MethodInfo[] methodInfoSort_Challengess = typeof(Sort_Challenges).GetMethods();// I think this one is fully investigated so I am not including it anymore
             System.Collections.Generic.List<string> CSharpMethodNames = new System.Collections.Generic.List<string>();
             System.Collections.Generic.List<string> JavaScriptMethodNames = new System.Collections.Generic.List<string>();
-            foreach (MethodInfo MethodInfo in methodInfos)
+            foreach (MethodInfo MethodInfo in methodInfoChallenges)
             {
                 if (MethodInfo.IsPublic)
                 {
                     CSharpMethodNames.Add(MethodInfo.Name);
                 }
             }
+            //foreach (MethodInfo MethodInfo in methodInfoSort_Challengess) // I think this one is fully investigated
+            //{
+            //    if (MethodInfo.IsPublic)
+            //    {
+            //        CSharpMethodNames.Add(MethodInfo.Name);
+            //    }
+            //}
             CSharpMethodNames.Add("SmallWorld");
             CSharpMethodNames.Add("SelectAChalenge");
             JavaScriptMethodNames.Add("FindCharsVowelsFirst");
