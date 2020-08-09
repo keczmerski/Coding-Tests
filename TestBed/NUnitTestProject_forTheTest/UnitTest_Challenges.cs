@@ -329,13 +329,14 @@ namespace NUnitTestProject_forTheTest
             Assert.DoesNotThrow(() => Reverse(null));
 
             //Assert.That(ex.Message == "Not a positive real number");
-            Assert.AreEqual(Reverse(""), "");
-            Assert.AreEqual(Reverse("hello world"), "dlrow olleh");
-            Assert.AreEqual(Reverse("cat"), "tac");
-            Assert.AreEqual(Reverse("catt"), "ttac");
-            Assert.AreEqual(Reverse("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFcatt"), "ttacFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-
+            Assert.AreEqual("", Reverse(""));
+            Assert.AreEqual("dlrow olleh", Reverse("hello world"));
+            Assert.AreEqual("tac", Reverse("cat"));
+            Assert.AreEqual("ttac", Reverse("catt"));
+            Assert.AreEqual("ttacFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", Reverse("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFcatt"));
         }
+
+        
         [Test]
         public void PalendromeStringTest()
         {

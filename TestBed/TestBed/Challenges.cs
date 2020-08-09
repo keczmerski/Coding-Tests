@@ -374,6 +374,63 @@ namespace TestBed
             }
             return reversedValue.ToString();
         }
+        public static string ReverseSuggested(string value, char separater = ' ')
+        {
+            if (string.IsNullOrEmpty(value)) { return value; } // just return the value, leave the handling to the caller.
+
+            var words = value.Split(separater); // split it to words by spaces
+
+            // initiate a string builder with a fixed size based on the original string size. 
+            // setting the capacity would avoid oversized allocation.
+            var resultBuilder = new StringBuilder(value.Length);
+
+            // iterate over words 
+            for (int x = 0; x < words.Length; x++)
+            {
+                // store the tailing punctuation
+                char? punctuation = null;
+                // iterate over characters in reverse 
+                for (int c = words[x].Length - 1; c >= 0; c--)
+                {
+                    var current = words[x][c];
+
+                    if (char.IsPunctuation(current))
+                    {
+                        if (c == 0) // for leading punctuation
+                        {
+                            // get the first poistion of the current word 
+                            var index = resultBuilder.ToString().Length - (words[x].Length - 1);
+
+                            // insert the leading punctuation to the first poition (its correct poistion)
+                            resultBuilder.Insert(index, current);
+                        }
+                        else
+                        {
+                            // store tailing punctuation to insert it afterward
+                            punctuation = current;
+                        }
+
+                    }
+                    else
+                    {
+                        // everything else, just append
+                        resultBuilder.Append(current);
+                    }
+
+                }
+
+                if (punctuation != null)
+                {
+                    // insert tailing punctuation 
+                    resultBuilder.Append(punctuation);
+//                    punctuation = null; //reset 
+                }
+
+                resultBuilder.Append(separater);
+            }
+
+            return resultBuilder.ToString();
+        }
 
         /// <summary>
         ///  Given a string, return a count of all letters.
