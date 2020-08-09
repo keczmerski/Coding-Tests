@@ -356,7 +356,7 @@ namespace TestBed
 
             foreach (char c in InitialValue)
             {
-                if (c == ' ' || c == '.' || c == ',' || c == '?')
+                if (char.IsWhiteSpace(c) || char.IsPunctuation(c))
                 {
                     seperatedValue.Add(currentWord.ToString());
                     seperatedValue.Add(c.ToString());
@@ -421,7 +421,7 @@ namespace TestBed
             StringBuilder currentWord = new StringBuilder();
             foreach (char c in InitialValue)
             {
-                if (c == ' ' || c == '.' || c == ',')
+                if (char.IsWhiteSpace(c) || char.IsPunctuation(c))
                 {
                     ReversedWords.Append(Reverse(currentWord.ToString()));
                     ReversedWords.Append(c.ToString());
