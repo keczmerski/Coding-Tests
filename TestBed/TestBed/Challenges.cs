@@ -304,7 +304,8 @@ namespace TestBed
         {
             if (string.IsNullOrWhiteSpace(toBeReversed)) { return toBeReversed; }
 
-            StringBuilder reversedString = new StringBuilder();
+            StringBuilder reversedString = new StringBuilder(toBeReversed.Length);
+
             for (int i = (toBeReversed.Length - 1); i >= 0; i--)
             {
                 reversedString.Append(toBeReversed[i].ToString());
@@ -350,8 +351,9 @@ namespace TestBed
             if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
 
             List<String> seperatedValue = new List<string>();
+            StringBuilder reversedValue = new StringBuilder(InitialValue.Length);
             StringBuilder currentWord = new StringBuilder();
-            StringBuilder reversedValue = new StringBuilder();
+
             foreach (char c in InitialValue)
             {
                 if (c == ' ' || c == '.' || c == ',' || c == '?')
@@ -415,14 +417,14 @@ namespace TestBed
         {
             if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
 
-            StringBuilder seperatedValue = new StringBuilder();
+            StringBuilder ReversedWords = new StringBuilder(InitialValue.Length);
             StringBuilder currentWord = new StringBuilder();
             foreach (char c in InitialValue)
             {
                 if (c == ' ' || c == '.' || c == ',')
                 {
-                    seperatedValue.Append(Reverse(currentWord.ToString()));
-                    seperatedValue.Append(c.ToString());
+                    ReversedWords.Append(Reverse(currentWord.ToString()));
+                    ReversedWords.Append(c.ToString());
                     currentWord.Clear();
                 }
                 else
@@ -430,10 +432,9 @@ namespace TestBed
                     currentWord.Append(c.ToString());
                 }
             }
-            seperatedValue.Append(Reverse(currentWord.ToString()));
+            ReversedWords.Append(Reverse(currentWord.ToString()));
 
-            string resultValue = seperatedValue.ToString();
-            return resultValue;
+            return ReversedWords.ToString();
         }
 
         /// <summary>
@@ -467,7 +468,7 @@ namespace TestBed
         {
             if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
             int InitalValueLength = InitialValue.Length; 
-            StringBuilder result = new StringBuilder();
+            StringBuilder result = new StringBuilder(InitalValueLength);
             string seperator = " ";
             for (int i = 0; i < InitalValueLength; i++)
             {
