@@ -161,9 +161,9 @@ namespace TestBed
 
         public static bool IsAllValuesPersentInEach(int[] A, int[] B)
         {
-            if (A.Length != B.Length || A.Length <= 0 || B.Length <= 0)
+            if (A.Length != B.Length || A.Length < 0 || B.Length < 0)
             {
-                throw new Exception("Arrays A and B must contain the same number of values Greater than 0");
+                return false;
             }
             bool IsAllValuesPersent = true;
             foreach( int valPresent in A)
@@ -177,20 +177,18 @@ namespace TestBed
         }
 
         /// <summary>
-        /// Accept string input and return bolean where the boolean returns true if the input string is a palindrome.
+        /// Accept string input and return bolean where the boolean returns true if the input string is a palindrome. 
+        /// If the string is empty, then it is not a palindrome.
         /// </summary>
-        /// <param name="InitialValue">String to be tested</param>
+        /// <param name="InitialValue">String to be tested. leading and trailing white space will be trimmed.</param>
         /// <returns>True if the InitialValue string is a palindrome.</returns>
         static public bool IsPalendrome(string InitialValue)
         {
-            if (InitialValue == null)
-            {
-                throw new System.NullReferenceException();
-            }
             if (string.IsNullOrWhiteSpace(InitialValue))
             {
                 return false;
             }
+            InitialValue = InitialValue.Trim();
             for (int i = 0; i <= (InitialValue.Length / 2); i++)
             {
                 if (InitialValue[i] != InitialValue[ReversePosition(InitialValue.Length, i)])
@@ -223,6 +221,7 @@ namespace TestBed
             {
                 throw new System.NullReferenceException();
             }
+
             int largest = int.MinValue;
             int secondLargest = int.MinValue;
             bool IsLargestAssignedAtLeastOnce = false;
@@ -303,10 +302,8 @@ namespace TestBed
         /// <returns>reversed string</returns>
         static public string Reverse(string toBeReversed)
         {
-            if (toBeReversed == null)
-            {
-                throw new System.NullReferenceException();
-            }
+            if (string.IsNullOrWhiteSpace(toBeReversed)) { return toBeReversed; }
+
             StringBuilder reversedString = new StringBuilder();
             for (int i = (toBeReversed.Length - 1); i >= 0; i--)
             {
@@ -324,7 +321,7 @@ namespace TestBed
         {
             if (number < 1)
             {
-                throw new System.Exception("Not a positive real number");
+                return false;
             }
             if (number <= 2) return true;
             if (number % 2 == 0) return false;
@@ -350,10 +347,8 @@ namespace TestBed
         /// <returns>string with the words in reverse order.</returns>
         public static string ReverseWords(string InitialValue)
         {
-            if (InitialValue == null)
-            {
-                throw new System.NullReferenceException();
-            }
+            if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
+
             List<String> seperatedValue = new List<string>();
             StringBuilder currentWord = new StringBuilder();
             StringBuilder reversedValue = new StringBuilder();
@@ -385,10 +380,8 @@ namespace TestBed
         /// <returns>a count of all letters.</returns>
         public static string LetterCounter(string InitialValue)
         {
-            if (InitialValue == null)
-            {
-                throw new System.NullReferenceException();
-            }
+            if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
+
             Dictionary<char, int> Counts = new Dictionary<char, int>();
             StringBuilder countResults = new StringBuilder();
 
@@ -420,10 +413,8 @@ namespace TestBed
         /// <returns>a sentance where each word is reversed individually without changing its position in the sentence</returns>
         public static string ReverseOnlyWords(string InitialValue)
         {
-            if (InitialValue == null)
-            {
-                throw new System.NullReferenceException();
-            }
+            if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
+
             StringBuilder seperatedValue = new StringBuilder();
             StringBuilder currentWord = new StringBuilder();
             foreach (char c in InitialValue)
@@ -452,10 +443,7 @@ namespace TestBed
         /// <returns>A string with only unique occurances of chars.</returns>
         public static string RemoveDuplicateChars(string InitialValue)
         {
-            if (InitialValue == null)
-            {
-                throw new System.NullReferenceException();
-            }
+            if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
             String Results = "";
 
             foreach (char c in InitialValue)
@@ -477,10 +465,7 @@ namespace TestBed
         /// <returns>all the possible substrings, varying from length 1 to the input string length. Each substring will be seperated by a space. The output will include the input string also.</returns>
         public static string AllSubString(string InitialValue)
         {
-            if (InitialValue == null)
-            {
-                throw new System.NullReferenceException();
-            }
+            if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
             int InitalValueLength = InitialValue.Length; 
             StringBuilder result = new StringBuilder();
             string seperator = " ";
@@ -499,7 +484,7 @@ namespace TestBed
         }
 
         /// <summary>
-        ///  Given a positive integer and the method should return the sum of all the digits in that integer.
+        ///  Given a positive integer and the method should return the sum of all the digits in that integer. (i.e: '345' returns the sum of '3 + 4 + 5'.)
         /// </summary>
         /// <param name="num">a positive integer</param>
         /// <returns>The sum of all the digits in the integer</returns>
@@ -524,13 +509,10 @@ namespace TestBed
         /// </summary>
         /// <param name="str">String to be sorted</param>
         /// <returns>A string of sorted chars.</returns>
-        public static string AlphabetSoup(string str)
+        public static string AlphabetSoup(string InitialValue)
         {
-            if (str == null)
-            {
-                throw new System.NullReferenceException();
-            }
-            char[] characters = str.ToCharArray();
+            if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
+            char[] characters = InitialValue.ToCharArray();
             Array.Sort(characters);
             return new string(characters);
         }
@@ -562,10 +544,8 @@ namespace TestBed
         /// <returns>the longest word found in a given string.</returns>
         public static string LongestWord(string sen)
         {
-            if (sen == null)
-            {
-                throw new System.NullReferenceException();
-            }
+            if (string.IsNullOrWhiteSpace(sen)) { return sen; }
+
             System.Text.RegularExpressions.Regex rx = new System.Text.RegularExpressions.Regex(@"\w*");
             System.Text.RegularExpressions.MatchCollection matches = rx.Matches(sen);
             string result = "";
