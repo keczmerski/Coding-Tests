@@ -211,10 +211,11 @@ namespace TestBed
         }
 
         /// <summary>
-        /// Given an unsorted integer array, find the second largest integer in the array.
+        /// Given an unsorted integer array, find the second largest integer in the array. 
+        /// If there are two values that are both the highest value, then the second highest value is equal to the first highest value.
         /// </summary>
         /// <param name="InitialValue"></param>
-        /// <returns>the second largest integer in the array</returns>
+        /// <returns>the second largest integer in the array, or -1 in the case of bad input.</returns>
         public static int FindSecondLargeInArray(int[] InitialValue)
         {
             if (InitialValue == null)
@@ -245,7 +246,7 @@ namespace TestBed
             }
             if (!IsSecondLargestAssignedAtLeastOnce)
             {
-                throw new System.Exception("Array has less than two unique values.");
+                return -1;
             }
             return secondLargest;
         }

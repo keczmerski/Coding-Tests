@@ -230,6 +230,7 @@ namespace NUnitTestProject_forTheTest
             int[] testArrayF = new int[] { -2, 3, 4, 4 };
             int[] testArrayC = new int[] { 1 };
             int[] testArrayD = new int[] { };
+            int[] testArrayG = new int[] { 2, 3, 45, 4, 60, 5, 1, 60 };
 
             var ex = Assert.Throws<System.Exception>(() => FindSecondLargeInArray(testArrayC));
             // now we can test the exception itself
@@ -240,6 +241,7 @@ namespace NUnitTestProject_forTheTest
             Assert.AreEqual(3, FindSecondLargeInArray(testArrayB));
             Assert.AreEqual(-1, FindSecondLargeInArray(testArrayE));
             Assert.AreEqual(3, FindSecondLargeInArray(testArrayF));
+            Assert.AreEqual(60, FindSecondLargeInArray(testArrayG));
             ex = Assert.Throws<System.NullReferenceException>(() => FindSecondLargeInArray(null));
 
             ex = Assert.Throws<System.Exception>(() => FindSecondLargeInArray(testArrayD));
