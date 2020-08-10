@@ -232,21 +232,18 @@ namespace NUnitTestProject_forTheTest
             int[] testArrayD = new int[] { };
             int[] testArrayG = new int[] { 2, 3, 45, 4, 60, 5, 1, 60 };
 
-            var ex = Assert.Throws<System.Exception>(() => FindSecondLargeInArray(testArrayC));
-            // now we can test the exception itself
-            string ExpectedError = "Array has less than two unique values.";
-            Assert.IsTrue(ex.Message.Contains(ExpectedError));
-
             Assert.AreEqual(45, FindSecondLargeInArray(testArrayA));
             Assert.AreEqual(3, FindSecondLargeInArray(testArrayB));
             Assert.AreEqual(-1, FindSecondLargeInArray(testArrayE));
             Assert.AreEqual(3, FindSecondLargeInArray(testArrayF));
-            Assert.AreEqual(60, FindSecondLargeInArray(testArrayG));
-            ex = Assert.Throws<System.NullReferenceException>(() => FindSecondLargeInArray(null));
+            Assert.AreEqual(45, FindSecondLargeInArray(testArrayG));
 
-            ex = Assert.Throws<System.Exception>(() => FindSecondLargeInArray(testArrayD));
+            Assert.AreEqual(-1, FindSecondLargeInArray(testArrayD));
+            Assert.AreEqual(-1, FindSecondLargeInArray(testArrayC));
+            var ex = Assert.Throws<System.ArgumentNullException>(() => FindSecondLargeInArray(null));
+
             // now we can test the exception itself
-            Assert.IsTrue(ex.Message.Contains(ExpectedError));
+            Assert.IsTrue(ex.Message.Contains("InitialValue"));
         }
         [Test]
         public void IntAdditionTest()

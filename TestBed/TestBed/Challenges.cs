@@ -212,7 +212,7 @@ namespace TestBed
 
         /// <summary>
         /// Given an unsorted integer array, find the second largest integer in the array. 
-        /// If there are two values that are both the highest value, then the second highest value is equal to the first highest value.
+        /// If there are two values that are both the highest value, then those two values are both the highest value.
         /// </summary>
         /// <param name="InitialValue"></param>
         /// <returns>the second largest integer in the array, or -1 in the case of bad input.</returns>
@@ -220,7 +220,7 @@ namespace TestBed
         {
             if (InitialValue == null)
             {
-                throw new System.NullReferenceException();
+                throw new ArgumentNullException(nameof(InitialValue));
             }
 
             int largest = int.MinValue;
