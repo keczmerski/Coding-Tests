@@ -10,6 +10,10 @@ namespace NUnitTestProject_forTheTest
         [SetUp]
         public void Setup()
         {
+            if (superBigWords == null || superBigReversedWords == null)
+            {
+                CreateReveseWordsOnlyTestWords("I am a tomato sandwich ", "I ma a otamot hciwdnas ", 1000);
+            }
         }
 
 
@@ -356,14 +360,80 @@ namespace NUnitTestProject_forTheTest
             Assert.DoesNotThrow(() => ReverseWords(null));
             Assert.AreEqual(ReverseWords(""), "");
         }
+        
         [Test]
         public void ReverseWordOnlyStringTest()
         {
             Assert.AreEqual(".I ma a otamot hciwdnas", ReverseOnlyWords(".I am a tomato sandwich"));
             Assert.AreEqual("emocleW ot prahsC renroc", ReverseOnlyWords("Welcome to Csharp corner"));
-            Assert.DoesNotThrow( () => ReverseOnlyWords(null));
+            Assert.DoesNotThrow(() => ReverseOnlyWords(null));
             Assert.AreEqual(ReverseOnlyWords(""), "");
         }
+        [Test]
+        public void ReverseOnlyWords_RevisedStringTest()
+        {
+            Assert.AreEqual("emocleW ot prahsC renroc", ReverseOnlyWords_Revised("Welcome to Csharp corner"));
+            Assert.AreEqual(".I ma a otamot hciwdnas", ReverseOnlyWords_Revised(".I am a tomato sandwich"));
+            Assert.AreEqual(".I ma a otamot dnas.hciw", ReverseOnlyWords_Revised(".I am a tomato sand.wich"));
+            Assert.DoesNotThrow(() => ReverseOnlyWords_Revised(null));
+            Assert.AreEqual(ReverseOnlyWords_Revised(""), "");
+        }
+        [Test]
+        public void ReverseWordOnlyStringTest_Suggested()
+        {
+            //Assert.AreEqual(".I ma a otamot hciwdnas.", ReverseOnlyWords_Suggested(".I am a tomato sandwich."));
+            //Assert.AreEqual(".I ma a otamot dnas.hciw.", ReverseOnlyWords_Suggested(".I am a tomato sand.wich."));
+            Assert.AreEqual("emocleW ot prahsC renroc", ReverseOnlyWords_Suggested("Welcome to Csharp corner"));
+            Assert.DoesNotThrow(() => ReverseOnlyWords_Suggested(null));
+            Assert.AreEqual(ReverseOnlyWords_Suggested(""), "");
+        }
+        [Test]
+        public void ReverseWordOnlyStringTest_SpeedTest()
+        {
+            Assert.DoesNotThrow(() => ReverseOnlyWords(superBigWords));
+        }
+        [Test]
+        public void ReverseWordOnlyStringTest_DoubleSpeedTest()
+        {
+            Assert.DoesNotThrow(()=>ReverseOnlyWords(superBigWords+superBigWords));
+        }
+        [Test]
+        public void ReverseWordOnlyStringTest_TrippleSpeedTest()
+        {
+            Assert.DoesNotThrow(() => ReverseOnlyWords(superBigWords + superBigWords + superBigWords + superBigWords));
+        }
+        [Test]
+        public void ReverseWordOnlyStringTest_QuadSpeedTest()
+        {
+            Assert.DoesNotThrow(() => ReverseOnlyWords(superBigWords + superBigWords + superBigWords + superBigWords + superBigWords + superBigWords + superBigWords + superBigWords));
+        }
+        [Test]
+        public void ReverseOnlyWords_RevisedStringTest_BigTest()
+        {
+            Assert.AreEqual(superBigReversedWords, ReverseOnlyWords_Revised(superBigWords));
+        }
+        [Test]
+        public void ReverseWordOnlyStringTest_Suggested_BigTest()
+        {
+            Assert.AreEqual(superBigReversedWords, ReverseOnlyWords_Suggested(superBigWords));
+        }
+
+        private string superBigReversedWords = null;
+        private string superBigWords = null;
+
+        private void CreateReveseWordsOnlyTestWords(string ToBeReversed, string Reversed, int repeatedHowManyTimes)
+        {
+            System.Text.StringBuilder ToBe = new System.Text.StringBuilder();
+            System.Text.StringBuilder done = new System.Text.StringBuilder();
+            for(int i = 0; i<repeatedHowManyTimes; i++)
+            {
+                ToBe.Append(ToBeReversed);
+                done.Append(Reversed);
+            }
+            superBigReversedWords = done.ToString().Trim();
+            superBigWords = ToBe.ToString().Trim();
+        }
+
         [Test]
         public void CharCounterStringTest()
         {

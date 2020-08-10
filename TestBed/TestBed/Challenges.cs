@@ -308,7 +308,7 @@ namespace TestBed
 
             for (int i = (toBeReversed.Length - 1); i >= 0; i--)
             {
-                reversedString.Append(toBeReversed[i].ToString());
+                reversedString.Append(toBeReversed[i]);
             }
             return reversedString.ToString();
         }
@@ -374,63 +374,7 @@ namespace TestBed
             }
             return reversedValue.ToString();
         }
-        public static string ReverseSuggested(string value, char separater = ' ')
-        {
-            if (string.IsNullOrEmpty(value)) { return value; } // just return the value, leave the handling to the caller.
 
-            var words = value.Split(separater); // split it to words by spaces
-
-            // initiate a string builder with a fixed size based on the original string size. 
-            // setting the capacity would avoid oversized allocation.
-            var resultBuilder = new StringBuilder(value.Length);
-
-            // iterate over words 
-            for (int x = 0; x < words.Length; x++)
-            {
-                // store the tailing punctuation
-                char? punctuation = null;
-                // iterate over characters in reverse 
-                for (int c = words[x].Length - 1; c >= 0; c--)
-                {
-                    var current = words[x][c];
-
-                    if (char.IsPunctuation(current))
-                    {
-                        if (c == 0) // for leading punctuation
-                        {
-                            // get the first poistion of the current word 
-                            var index = resultBuilder.ToString().Length - (words[x].Length - 1);
-
-                            // insert the leading punctuation to the first poition (its correct poistion)
-                            resultBuilder.Insert(index, current);
-                        }
-                        else
-                        {
-                            // store tailing punctuation to insert it afterward
-                            punctuation = current;
-                        }
-
-                    }
-                    else
-                    {
-                        // everything else, just append
-                        resultBuilder.Append(current);
-                    }
-
-                }
-
-                if (punctuation != null)
-                {
-                    // insert tailing punctuation 
-                    resultBuilder.Append(punctuation);
-//                    punctuation = null; //reset 
-                }
-
-                resultBuilder.Append(separater);
-            }
-
-            return resultBuilder.ToString();
-        }
 
         /// <summary>
         ///  Given a string, return a count of all letters.
@@ -492,6 +436,117 @@ namespace TestBed
             ReversedWords.Append(Reverse(currentWord.ToString()));
 
             return ReversedWords.ToString();
+        }
+
+        /// <summary>
+        /// Given a sentence, return a sentance where each word is reversed individually without changing its position in the sentence. 
+        /// Leading and trailing whitespace will be trimmed.
+        /// This version was revised using tips from https://codereview.stackexchange.com/a/247650/57486 to improve the algorythm's speed in every way possible.
+        /// </summary>
+        /// <param name="InitialValue">a sentance</param>
+        /// <returns>a sentance where each word is reversed individually without changing its position in the sentence</returns>
+        public static string ReverseOnlyWords_Revised(string InitialValue)
+        {
+            if (string.IsNullOrWhiteSpace(InitialValue)) { return InitialValue; }
+            InitialValue = InitialValue.Trim();
+
+            StringBuilder ReversedWords = new StringBuilder(InitialValue.Length);
+
+            int StartOfWordPointer = 0;
+            for (int EndOfWordPointer = 0; EndOfWordPointer < InitialValue.Length; EndOfWordPointer++)
+            {
+                if (char.IsWhiteSpace(InitialValue[EndOfWordPointer]) || char.IsPunctuation(InitialValue[EndOfWordPointer]))
+                {
+                    //ReversedWords.Append(Reverse(InitialValue.Substring(StartOfWordPointer, EndOfWordPointer - StartOfWordPointer)));
+
+                    //for (int i = EndOfWordPointer - 1; i >= StartOfWordPointer; i--)
+                    //{
+                    //    ReversedWords.Append(InitialValue[i]);
+                    //}
+                    ReverseMagid(ref ReversedWords, InitialValue, StartOfWordPointer, EndOfWordPointer);
+                    ReversedWords.Append(InitialValue[EndOfWordPointer]);
+                    StartOfWordPointer = EndOfWordPointer + 1;
+                }
+            }
+            if (StartOfWordPointer < InitialValue.Length)
+            {
+                //for (int i = InitialValue.Length - 1; i >= StartOfWordPointer; i--)
+                //{
+                //    ReversedWords.Append(InitialValue[i]);
+                //}
+                ReverseMagid(ref ReversedWords, InitialValue, StartOfWordPointer, InitialValue.Length);
+            }
+            return ReversedWords.ToString();
+        }
+
+        private static void ReverseMagid(ref StringBuilder ReversedWords, string InitialValue, int startPointer, int endPointer)
+        {
+            for (int i = endPointer - 1; i >= startPointer; i--)
+            {
+                ReversedWords.Append(InitialValue[i]);
+            }
+        }
+
+        /// <summary>
+        /// Credit: Almost completely lifted/coppied from https://codereview.stackexchange.com/a/247650/57486
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="separater"></param>
+        /// <returns></returns>
+        public static string ReverseOnlyWords_Suggested(string value, char separater = ' ')
+        {
+            if (string.IsNullOrEmpty(value)) { return value; } // just return the value, leave the handling to the caller.
+
+            var words = value.Split(separater); // split it to words by spaces
+
+            // initiate a string builder with a fixed size based on the original string size. 
+            // setting the capacity would avoid oversized allocation.
+            var resultBuilder = new StringBuilder(value.Length);
+
+            // iterate over words 
+            for (int x = 0; x < words.Length; x++)
+            {
+                // store the tailing punctuation
+                char? punctuation = null;
+                // iterate over characters in reverse 
+                for (int c = words[x].Length - 1; c >= 0; c--)
+                {
+                    var current = words[x][c];
+
+                    if (char.IsPunctuation(current))
+                    {
+                        if (c == 0) // for leading punctuation
+                        {
+                            // get the first poistion of the current word 
+                            var index = resultBuilder.ToString().Length - (words[x].Length - 1);
+
+                            // insert the leading punctuation to the first poition (its correct poistion)
+                            resultBuilder.Insert(index, current);
+                        }
+                        else
+                        {
+                            // store tailing punctuation to insert it afterward
+                            punctuation = current;
+                        }
+                    }
+                    else
+                    {
+                        // everything else, just append
+                        resultBuilder.Append(current);
+                    }
+
+                }
+
+                if (punctuation != null)
+                {
+                    // insert tailing punctuation 
+                    resultBuilder.Append(punctuation);
+                    //                    punctuation = null; //reset 
+                }
+                resultBuilder.Append(separater);
+            }
+
+            return resultBuilder.ToString().Trim();
         }
 
         /// <summary>
