@@ -45,6 +45,32 @@ namespace TestBed
             }
         }
 
+        /// <summary>
+        /// Look at each element in an array of integers and for that element see if any other elements addup to the target.
+        /// </summary>
+        /// <param name="nums">an array of integers</param>
+        /// <param name="target">the target for the sum of two integers in nums</param>
+        /// <returns>the array positions of two integers that add up to target</returns>
+        public static int[] TwoSum(int[] nums, int target)
+        {
+            if (nums == null) { throw new System.ArgumentNullException(nameof(nums)); }
+            for (int FirstPointer = 0; FirstPointer < nums.Length; FirstPointer++)
+            {
+                for (int SecondPointer = 0; SecondPointer < nums.Length; SecondPointer++)
+                {
+                    if (FirstPointer != SecondPointer)
+                    {
+                        if (nums[FirstPointer] + nums[SecondPointer] == target)
+                        {
+                            return new int[] { FirstPointer, SecondPointer };
+                        }
+                    }
+                }
+            }
+            throw new System.ArgumentException("Target not found");
+        }
+
+
         private static List<CountedValue> CreateListOfConsecutiveValueCounts(int[] c)
         {
             List<CountedValue> ListOfConsecutiveValueCounts = new List<CountedValue>();

@@ -222,6 +222,21 @@ namespace NUnitTestProject_forTheTest
         #endregion
 
         [Test]
+        public void TwoSum_Test()
+        {
+            Assert.AreEqual((new int[] { 0, 1 }), TwoSum(new int[] { 1, 2 }, 3));
+            Assert.AreEqual((new int[] { 0, 1 }), TwoSum(new int[] { 1, 2, 7, 8, 3, 4546, 3, 67, 3, 4 }, 3));
+            Assert.AreEqual((new int[] { 8, 9 }), TwoSum(new int[] { 10, 20, 7, 8, 3, 4546, 3, 67, 1, 2 }, 3));
+            Assert.AreEqual((new int[] { 4, 5 }), TwoSum(new int[] { 10, 20, 7, 8, 3, 0, 3, 67, 1, 2 }, 3));
+
+            var ex = Assert.Throws<System.ArgumentException>(() => TwoSum(new int[] { 10, 20, 7, 8, 3, 0, 3, 67, 1, 2 }, 345345));
+            Assert.IsTrue(ex.Message.ToLower().Contains("not found"));
+            Assert.Throws<System.ArgumentException>(() => TwoSum(new int[] { }, 345345));
+            Assert.Throws<System.ArgumentException>(() => TwoSum(new int[] { 345345 }, 345345));
+            Assert.Throws<System.ArgumentNullException>(() => TwoSum(null, 345345));
+        }
+
+        [Test]
         public void SecondLargestTest()
         {
             int[] testArrayA = new int[] { 2, 3, 45, 4, 60, 5, 1 };
@@ -242,7 +257,6 @@ namespace NUnitTestProject_forTheTest
             Assert.AreEqual(-1, FindSecondLargeInArray(testArrayC));
             var ex = Assert.Throws<System.ArgumentNullException>(() => FindSecondLargeInArray(null));
 
-            // now we can test the exception itself
             Assert.IsTrue(ex.Message.Contains("InitialValue"));
         }
         [Test]
