@@ -1,6 +1,7 @@
 ﻿using System;
 using TestBed;
 using System.Reflection;
+using System.Linq;
 
 namespace SelectAChalenge
 {
@@ -22,7 +23,8 @@ namespace SelectAChalenge
             System.Collections.Generic.List<string> JavaScriptMethodNames = new System.Collections.Generic.List<string>();
             foreach (MethodInfo MethodInfo in methodInfoChallenges)
             {
-                if (MethodInfo.IsPublic)
+                string[] filterMethodsThatArePlayedOut = new string[] { "SumOfDigits" };
+                if (MethodInfo.IsPublic && !filterMethodsThatArePlayedOut.Contains(MethodInfo.Name))
                 {
                     CSharpMethodNames.Add(MethodInfo.Name);
                 }

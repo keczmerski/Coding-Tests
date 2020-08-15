@@ -242,6 +242,11 @@ namespace TestBed
         /// </summary>
         /// <param name="InitialValue"></param>
         /// <returns>the second largest integer in the array, or -1 in the case of bad input.</returns>
+        /// <remarks>I have realized that the ultimate implementation of this problem is heapsort. 
+        /// Questions pointing to the nth largest, or nth smallest are likely targeting heapsort. 
+        /// As near as I can tell, C# does not have a builtin heapsort. I have seen implementations of heap sort, 
+        /// but there is no way I would come up with that for a coding challenge answer. Perhaps I will inplement it someday but not today.
+        /// Unfortunately, </remarks>
         public static int FindSecondLargeInArray(int[] InitialValue)
         {
             if (InitialValue == null)
