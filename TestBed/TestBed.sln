@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestProject_forTheTest
 		{D2B1D88F-9040-47E4-AF08-83FC3BD266AD} = {D2B1D88F-9040-47E4-AF08-83FC3BD266AD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectAChalenge", "SelectAChalenge\SelectAChalenge.csproj", "{2E98AB3F-1923-4E22-A946-6BB15D795402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SelectAChallenge", "SelectAChalenge\SelectAChallenge.csproj", "{2E98AB3F-1923-4E22-A946-6BB15D795402}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

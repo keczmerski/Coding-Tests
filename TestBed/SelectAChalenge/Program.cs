@@ -3,7 +3,7 @@ using TestBed;
 using System.Reflection;
 using System.Linq;
 
-namespace SelectAChalenge
+namespace SelectAChallenge
 {
     class Program
     {
