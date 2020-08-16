@@ -9,6 +9,18 @@ namespace TestBed
     public class Math_Challenges
     {
         /// <summary>
+        /// Euclid's algorythm: Find the greatest common denominator.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static int GreatestCommonDenominator(int a, int b)
+        {
+            
+            return -1;
+        }
+
+        /// <summary>
         /// Look at each element in an array of integers and for that element see if any other elements addup to the target.
         /// </summary>
         /// <param name="nums">an array of integers</param>

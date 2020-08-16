@@ -7,6 +7,12 @@ namespace NUnitTestProject_forTheTest
 {
     class UnitTest_Math_Challenges
     {
+        [Test]
+        public void Test_GreatestCommonDenominator()
+        {
+            Assert.AreEqual(12, GreatestCommonDenominator(60, 96));
+            Assert.AreEqual(4, GreatestCommonDenominator(20,8));
+        }
         #region Test_GetAllGroupsOfThreeUniqueOperandsForSingleSum
         [Test]
         public void Test_getCountofOpperandOccurancesIn_ThreeUniqueOperandsForSingleSum()
