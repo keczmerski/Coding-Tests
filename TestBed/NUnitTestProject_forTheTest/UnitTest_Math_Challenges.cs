@@ -11,7 +11,10 @@ namespace NUnitTestProject_forTheTest
         public void Test_GreatestCommonDenominator()
         {
             Assert.AreEqual(12, GreatestCommonDenominator(60, 96));
-            Assert.AreEqual(4, GreatestCommonDenominator(20,8));
+            Assert.AreEqual(4, GreatestCommonDenominator(20, 8));
+            Assert.AreEqual(1, GreatestCommonDenominator(60, 61));
+            Assert.AreEqual(1, GreatestCommonDenominator(20, 1));
+            Assert.AreEqual(-1, GreatestCommonDenominator(20, 0));
         }
         #region Test_GetAllGroupsOfThreeUniqueOperandsForSingleSum
         [Test]

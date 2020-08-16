@@ -16,8 +16,17 @@ namespace TestBed
         /// <returns></returns>
         public static int GreatestCommonDenominator(int a, int b)
         {
-            
-            return -1;
+            if (a < 1 || b < 1)
+            {
+                return -1;
+            }
+            while (b != 0)
+            {
+                int oldA = a;
+                a = b;
+                b = oldA % b;
+            }
+            return a;
         }
 
         /// <summary>
