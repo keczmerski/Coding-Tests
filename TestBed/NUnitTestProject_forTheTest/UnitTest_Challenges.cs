@@ -136,6 +136,18 @@ namespace NUnitTestProject_forTheTest
 
         #region Strings and Chars
         [Test]
+        public void RestoreIpAddresses_Test()
+        {
+            
+
+            Assert.DoesNotThrow(()=> RestoreIpAddresses("0279245587303"));
+            Assert.AreEqual(new string[] { "0.10.0.10", "0.100.1.0" }, RestoreIpAddresses("010010"));
+            Assert.AreEqual(new string[] { "1.1.1.1" }, RestoreIpAddresses("1111"));
+            
+            Assert.AreEqual(new string[] { "255.255.11.135", "255.255.111.35" }, RestoreIpAddresses("25525511135"));
+        }
+
+        [Test]
         public void AllSubStringTest()
         {
             Assert.AreEqual("a ab abc abcd b bc bcd c cd d", AllSubString("abcd"));

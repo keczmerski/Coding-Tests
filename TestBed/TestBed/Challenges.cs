@@ -515,6 +515,64 @@ namespace TestBed
  
             return result;
         }
+
+        public static IList<string> RestoreIpAddresses(string s)
+        {
+            bool IsValid = false;
+            string[] PotentialIP = new string[4];
+            List<string> ValidIPs = new List<string>();
+            for (int a = 1; a <= 3; a++)
+            {
+                if ((s.Length / a < 4) || (s.Length / a > 3))
+                {
+                    for (int b = 1; b <= 3; b++)
+                    {
+                        if ((s.Length / b < 4) || (s.Length / b > 3))
+                        {
+                            for (int c = 1; c <= 3; c++)
+                            {
+                                if ((s.Length / b < 4) || (s.Length / b > 3))
+                                {
+                                    if (a + b + c + 1 <= s.Length && s.Length - a -b -c <= 3)
+                                    {
+                                        PotentialIP[0] = s.Substring(0, a);
+                                        PotentialIP[1] = s.Substring(a, b);
+                                        PotentialIP[2] = s.Substring(a + b, c);
+                                        PotentialIP[3] = s.Substring(a + b + c);
+                                        IsValid = IsTheIPValid(PotentialIP);
+                                    }
+                                }
+                                if (IsValid)
+                                {
+                                    ValidIPs.Add($"{PotentialIP[0]}.{PotentialIP[1]}.{PotentialIP[2]}.{PotentialIP[3]}");
+                                    IsValid = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return ValidIPs.ToArray();
+        }
+        private static bool IsTheIPValid(string[] IP)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (Convert.ToInt32(IP[i]) < 0 )
+                {
+                    return false;
+                }
+                if (Convert.ToInt32(IP[i]) > 255 )
+                {
+                    return false;
+                }
+                if  (IP[i].Length >= 2 && (IP[i])[0] == '0')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
 
