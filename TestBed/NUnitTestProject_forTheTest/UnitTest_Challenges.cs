@@ -148,6 +148,50 @@ namespace NUnitTestProject_forTheTest
         }
 
         [Test]
+        public void RepeatedString_Test()
+        {
+
+
+            Assert.AreEqual(4, RepeatedString("a", 4));
+            Assert.AreEqual(4, RepeatedString("aa", 4));
+            Assert.AreEqual(8, RepeatedString("aa", 8));
+            Assert.AreEqual(7, RepeatedString("aa", 7));
+            Assert.AreEqual(400, RepeatedString("a", 400));
+            Assert.AreEqual(999999999, RepeatedString("a", 999999999));
+            Assert.AreEqual(1, RepeatedString("a0", 1));
+            Assert.AreEqual(1, RepeatedString("a0", 2));
+            Assert.AreEqual(2, RepeatedString("a0", 3));
+            Assert.AreEqual(0, RepeatedString("0a", 1));
+            Assert.AreEqual(1, RepeatedString("0a", 2));
+            Assert.AreEqual(1, RepeatedString("0a", 3));
+            Assert.AreEqual(1, RepeatedString("a0a", 1));
+            Assert.AreEqual(1, RepeatedString("a0a", 2));
+            Assert.AreEqual(2, RepeatedString("a0a", 3));
+            Assert.AreEqual(3, RepeatedString("a0a", 4));
+            Assert.AreEqual(3, RepeatedString("a0a", 5));
+            Assert.AreEqual(4, RepeatedString("a0a", 6));
+            Assert.AreEqual(5, RepeatedString("a0a", 7));
+            Assert.AreEqual(0, RepeatedString("0a0a0", 1));
+            Assert.AreEqual(1, RepeatedString("0a0a0", 2));
+            Assert.AreEqual(1, RepeatedString("0a0a0", 3));
+            Assert.AreEqual(2, RepeatedString("0a0a0", 4));
+            Assert.AreEqual(2, RepeatedString("0a0a0", 5));
+            Assert.AreEqual(2, RepeatedString("0a0a0", 6));
+            Assert.AreEqual(3, RepeatedString("0a0a0", 7));
+            Assert.AreEqual(4, RepeatedString("0a0a0", 9));
+            Assert.AreEqual(999999999, RepeatedString("a", 999999999));
+            Assert.AreEqual(999999999999999999, RepeatedString("a", 999999999999999999));
+            Assert.AreEqual(999999999999999999, RepeatedString("aaa", 999999999999999999));
+            Assert.AreEqual(100, RepeatedString("0a", 200));
+
+            Assert.AreEqual(0, RepeatedString("0000", 4));
+            Assert.AreEqual(0, RepeatedString("0000", 400000));
+            Assert.AreEqual(1, RepeatedString("a", 1));
+            Assert.AreEqual(1, RepeatedString("aa", 1));
+            Assert.AreEqual(2, RepeatedString("aa", 2));
+        }
+
+        [Test]
         public void AllSubStringTest()
         {
             Assert.AreEqual("a ab abc abcd b bc bcd c cd d", AllSubString("abcd"));

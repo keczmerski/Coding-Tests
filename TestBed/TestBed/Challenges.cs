@@ -554,6 +554,42 @@ namespace TestBed
             }
             return ValidIPs.ToArray();
         }
+
+        // Complete the repeatedString function below.
+        public static long RepeatedString(string s, long n)
+        {
+            char theCharToCount = 'a';
+            long multiplier = (long)Math.Floor((decimal)(n / s.Length));
+            if (n <= s.Length)
+            {
+                return CountChars(s.Substring(0, (int)n), theCharToCount);
+            }
+
+            long ComplexCountFirstHalf = 0;
+            long ComplexCountSecondHalf = 0;
+            long CountOfFirstToBeCounted = n % s.Length;
+
+            ComplexCountFirstHalf += CountChars(s.Substring(0, (int)CountOfFirstToBeCounted), theCharToCount);
+
+            long CountOfLastToBeCounted = s.Length - CountOfFirstToBeCounted;
+
+            ComplexCountSecondHalf += CountChars(s.Substring((int)CountOfFirstToBeCounted, (int)(CountOfLastToBeCounted)), theCharToCount);
+            return ComplexCountFirstHalf + multiplier * (ComplexCountFirstHalf + ComplexCountSecondHalf);
+
+        }
+
+        private static long CountChars(string s, char match)
+        {
+            int count = 0;
+            foreach (char c in s)
+            {
+                if (c == match)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
         private static bool IsTheIPValid(string[] IP)
         {
             for (int i = 0; i < 4; i++)
