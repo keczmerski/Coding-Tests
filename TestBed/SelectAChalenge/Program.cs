@@ -15,8 +15,8 @@ namespace SelectAChallenge
         /// I suppose, this may depend on how long those other lists grow.
         /// </summary>
         /// <param name="args"></param>
-        static void Main()
-        {
+        static void Main() { 
+        
             MethodInfo[] methodInfoChallenges = typeof(Challenges).GetMethods();
             //MethodInfo[] methodInfoSort_Challengess = typeof(Sort_Challenges).GetMethods();// I think this one is fully investigated so I am not including it anymore
             System.Collections.Generic.List<string> CSharpMethodNames = new System.Collections.Generic.List<string>();
@@ -42,27 +42,69 @@ namespace SelectAChallenge
             JavaScriptMethodNames.Add("Reverser");
             JavaScriptMethodNames.Add("DataMunging");
             Random rand = new Random(Guid.NewGuid().GetHashCode());
-            Console.WriteLine("C#, JavaScript, or All?");
-            ConsoleKeyInfo answerKey = Console.ReadKey();
-            char answer = answerKey.KeyChar;
-            Console.WriteLine();
-            if (answer == 'c' || answer == 'C')
+            Console.WriteLine("Study Selector? (Y/N) (If not then you are simply randomly selecting some code to review.)");
+            ConsoleKeyInfo StudySelectorAnswerKey = Console.ReadKey();
+            char StudySelectorAnswer = StudySelectorAnswerKey.KeyChar;
+
+            bool IsSelectCodeForReview = true;
+            string simpleBoarder = "******************************************************************" + System.Environment.NewLine;
+            string TextBoarder = System.Environment.NewLine + System.Environment.NewLine + simpleBoarder + simpleBoarder + simpleBoarder + System.Environment.NewLine;
+
+            if (StudySelectorAnswer == 'Y' || StudySelectorAnswer == 'y')
             {
-                int CSharpSelection = rand.Next(0, CSharpMethodNames.Count - 1);
-                Console.WriteLine($"C# answer: {CSharpMethodNames[CSharpSelection]}");
+                string selectACodeReview = "Select a code review and have it reviewed on Stack overflow/ code reviews.";
+                string[] Choices = new string[] {
+                    "Read your text book (Or research on line) and study algorythms.",
+                    "Read your text book (Or research on line) and study datastructures.",
+                    "Create a DataStructure in your coding chalenge section.",
+                    "Create a sorting algorythm in your coding chalenge section.",
+                    "Do a Hacker Rank coding challenge.",
+                    "Do a LeetCode coding challenge.",
+                    "Do a Hacker Rank coding challenge.",
+                    "Do a LeetCode coding challenge.",
+                    "Do a Hacker Rank coding challenge.",
+                    "Do a LeetCode coding challenge.",
+                    "Okay, okay, study Unity. Sigh.",
+                    selectACodeReview,
+                    selectACodeReview
+                };
+                int StudySelectorSelection = rand.Next(0, Choices.Count());
+                Console.WriteLine(TextBoarder + $"{Choices[StudySelectorSelection]}" + TextBoarder);
+                if (!String.Equals(selectACodeReview, Choices[StudySelectorSelection]))
+                {
+                    IsSelectCodeForReview = false;
+                }
+                
             }
-            else if (answer == (int)'j' || answer == (int)'J')
+
+
+            if (IsSelectCodeForReview)
             {
-                int JSSelection = rand.Next(0, JavaScriptMethodNames.Count - 1);
-                Console.WriteLine($"JS answer: {JavaScriptMethodNames[JSSelection]}");
-            }
-            else
-            {
-                System.Collections.Generic.List<string> AllMethodNames = new System.Collections.Generic.List<string>();
-                AllMethodNames.AddRange(CSharpMethodNames);
-                AllMethodNames.AddRange(JavaScriptMethodNames);
-                int AllSelection = rand.Next(0, AllMethodNames.Count - 1);
-                Console.WriteLine($"All answer: {AllMethodNames[AllSelection]}");
+                Console.WriteLine();
+                Console.WriteLine("C#, JavaScript, or All?");
+                Console.WriteLine();
+                ConsoleKeyInfo answerKey = Console.ReadKey();
+                char answer = answerKey.KeyChar;
+
+                if (answer == 'c' || answer == 'C')
+                {
+                    int CSharpSelection = rand.Next(0, CSharpMethodNames.Count - 1);
+                    Console.WriteLine($"C# answer: {CSharpMethodNames[CSharpSelection]}");
+                }
+                else if (answer == 'j' || answer == 'J')
+                {
+                    int JSSelection = rand.Next(0, JavaScriptMethodNames.Count - 1);
+                    Console.WriteLine($"JS answer: {JavaScriptMethodNames[JSSelection]}");
+                }
+                else
+                {
+                    System.Collections.Generic.List<string> AllMethodNames = new System.Collections.Generic.List<string>();
+                    AllMethodNames.AddRange(CSharpMethodNames);
+                    AllMethodNames.AddRange(JavaScriptMethodNames);
+                    int AllSelection = rand.Next(0, AllMethodNames.Count - 1);
+                    Console.WriteLine($"All answer: {AllMethodNames[AllSelection]}");
+                }
+                Console.WriteLine(TextBoarder);
             }
             Console.WriteLine("Select any key to close.");
             Console.ReadLine();
