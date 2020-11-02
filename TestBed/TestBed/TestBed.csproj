@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Challenges.cs" />
+    <Compile Include="DebthFIrstSearch.cs" />
     <Compile Include="Math_Challenges.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
